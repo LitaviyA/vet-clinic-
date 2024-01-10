@@ -23,7 +23,7 @@ public class PetService {
     private Dog buildDog() {
         Pet pet = buildPet(DOG_TYPE);
         Dog dog = petTodog(pet);
-        System.out.print("Siza (xS / S / M / L / xxL): ");
+        System.out.print("Size (xS / S / M / L / xxL): ");
         dog.setSize(Main.SCANNER.nextLine());
         return dog;
     }
@@ -47,7 +47,7 @@ public class PetService {
         pet.setName(Main.SCANNER.nextLine());
 
         System.out.print("Sex (male / female): ");
-        pet.setName(Main.SCANNER.nextLine());
+        pet.setSex(Main.SCANNER.nextLine());
 
         return pet;
     }
