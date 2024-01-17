@@ -1,7 +1,5 @@
 package main.java.com.magicvet;
 
-import main.java.com.magicvet.comparator.PetAgeComparator;
-import main.java.com.magicvet.comparator.PetNameComparator;
 import main.java.com.magicvet.model.Cat;
 import main.java.com.magicvet.model.Dog;
 import main.java.com.magicvet.model.Pet;
@@ -40,13 +38,23 @@ public class Sandbox {
             System.out.println("\t" + dog.getSize());
         }
 
-        Arrays.sort(pets, new PetNameComparator());
+        Arrays.sort(pets, new Comparator<Pet>() {
+            @Override
+            public int compare(Pet o1, Pet o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
         System.out.println("Sort by name: ");
         for(Pet pet: pets){
             System.out.println("\t"  + pet.getName());
         }
 
-        Arrays.sort(pets, new PetAgeComparator());
+        Arrays.sort(pets, new Comparator<Pet>() {
+            @Override
+            public int compare(Pet o1, Pet o2) {
+                return Integer.parseInt(o1.getAge()) - Integer.parseInt(o2.getAge());
+            }
+        });
         System.out.println("Sort by age: ");
         for(Pet pet: pets){
             System.out.println("\t" + pet.getAge());
