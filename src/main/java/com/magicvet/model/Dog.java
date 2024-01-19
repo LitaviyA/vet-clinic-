@@ -9,9 +9,10 @@ public class Dog  extends Pet{
     public Dog(Size size){
         this.size = size;
     }
-    public Dog(String name, String age){
+    public Dog(String name, String age, HealthState state){
         setName(name);
         setAge(age);
+        setHealthState(state);
     }
 
     @Override
@@ -56,5 +57,6 @@ public class Dog  extends Pet{
             return value;
         }
     }
+
 
 }

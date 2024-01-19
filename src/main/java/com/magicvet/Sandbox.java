@@ -19,11 +19,11 @@ public class Sandbox {
         };
 
         Pet[] pets = {
-                new Cat("Milo","2"),
-                new Dog("Abbey","4"),
-                new Cat("Skip","1"),
-                new Dog("Candy","8"),
-                new Cat("Gracie","3"),
+                new Cat("Milo","2", Pet.HealthState.LIGHT),
+                new Dog("Abbey","4", Pet.HealthState.BAD),
+                new Cat("Skip","1", Pet.HealthState.PERFECT),
+                new Dog("Candy","8", Pet.HealthState.MEDIUM),
+                new Cat("Gracie","3", Pet.HealthState.VERYBAD),
 
         };
 
@@ -58,6 +58,17 @@ public class Sandbox {
         System.out.println("Sort by age: ");
         for(Pet pet: pets){
             System.out.println("\t" + pet.getAge());
+        }
+
+        Arrays.sort(pets, new Comparator<Pet>() {
+            @Override
+            public int compare(Pet o1, Pet o2) {
+                return o1.getHealthState().getValue() - o2.getHealthState().getValue();
+            }
+        });
+        System.out.println("Sort by health state: ");
+        for(Pet pet: pets){
+            System.out.println("\t" + pet.getName() + " - " + pet.getHealthState());
         }
     }
 }
