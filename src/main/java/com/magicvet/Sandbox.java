@@ -1,6 +1,7 @@
 package main.java.com.magicvet;
 
 import main.java.com.magicvet.model.Cat;
+import main.java.com.magicvet.model.Client;
 import main.java.com.magicvet.model.Dog;
 import main.java.com.magicvet.model.Pet;
 
@@ -70,5 +71,11 @@ public class Sandbox {
         for(Pet pet: pets){
             System.out.println("\t" + pet.getName() + " - " + pet.getHealthState());
         }
+
+        System.out.println("\nRegistration date pet");
+        System.out.println("\t" + new Cat());
+
+        System.out.println("\nRegistration date client");
+        System.out.println("\t" + new Client());
     }
 }
