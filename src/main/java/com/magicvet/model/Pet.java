@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public abstract class Pet {
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+    static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
     private String type;
     private String sex;
     private String age;
@@ -14,6 +14,10 @@ public abstract class Pet {
     private HealthState state;
 
     private final LocalDateTime registrationDate = LocalDateTime.now();
+
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
+    }
 
     @Override
     public String toString(){
