@@ -10,7 +10,7 @@ public class PetService {
     private static final String CAT_TYPE = "cat";
 
     public Pet registerNewPet(){
-        Pet pet = null;
+        Pet pet = null;                                           //TODO Optional
         System.out.print("Type (dog / cat): ");
         String type = Main.SCANNER.nextLine();
 
@@ -19,7 +19,7 @@ public class PetService {
         } else {
             System.out.println("Unknown pet type: " + type);
         }
-        return pet;
+        return pet;                                                //TODO Optional
     }
 
     private Pet buildPet(String type) {

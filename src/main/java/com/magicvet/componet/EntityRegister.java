@@ -6,10 +6,8 @@ import main.java.com.magicvet.model.Pet;
 import main.java.com.magicvet.service.ClientService;
 import main.java.com.magicvet.service.PetService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class EntityRegister {
     private final ClientService clientService = new ClientService();
@@ -19,13 +17,14 @@ public class EntityRegister {
         List<Client> clients = new ArrayList<>();
         String message = "Do you want to register more clients? y/n ";
         do {
-            Client client = addClient();
-            if (client != null) {
-                clients.add(client);
-            }
+            Optional<Client> client = addClient();
+            client.ifPresent(clients::add);
         } while (verifyRepeating(message));
 
-        Map<Client.Location, List<Client>> clientsByLocation = groupClients(clients);
+        Map<Client.Location, List<Client>> clientsByLocation = clients.stream()
+                        .collect(Collectors.groupingBy(Client::getLocation));
+//        Map<Client.Location, List<Client>> clientsByLocation = groupClients(clients);
+
         printClients(clientsByLocation);
     }
 
@@ -38,7 +37,7 @@ public class EntityRegister {
         }
     }
 
-    private Map<Client.Location, List<Client>> groupClients(List<Client> clients) {
+  /*  private Map<Client.Location, List<Client>> groupClients(List<Client> clients) {
         List<Client> fromKyiv  = new ArrayList<>();
         List<Client> fromLviv  = new ArrayList<>();
         List<Client> fromOdesa = new ArrayList<>();
@@ -59,20 +58,19 @@ public class EntityRegister {
         clientsByLocation.put(Client.Location.UNKNOWN, unknownLocation);
         return clientsByLocation;
 
-    }
+    }*/
 
-    private Client addClient(){
-        Client client = clientService.registerNewClient();
+    private Optional<Client> addClient(){
 
-        if(client != null){
-            System.out.print("Do you want to add pet now? y/n: ");
-            String answer = Main.SCANNER.nextLine();
-            if("y".equals(answer)) {
-                registerPets(client);
-                System.out.println(client);
-            } else if (!"n".equals(answer)) {
-                System.out.println("Select yes or no.");
-            }
+        Optional<Client> client = clientService.registerNewClient();
+
+        System.out.print("Do you want to add pet now? y/n: ");
+        String answer = Main.SCANNER.nextLine();
+        if("y".equals(answer)) {
+            client.ifPresent(this::registerPets);
+
+        } else if (!"n".equals(answer)) {
+            System.out.println("Select y or n.");
         }
         return client;
     }
@@ -81,12 +79,13 @@ public class EntityRegister {
         String message = "Do you want to add more pets for the current client? y/n ";
         do {
             addPet(client);
+            System.out.println(client);
         } while (verifyRepeating(message));
     }
     private void addPet(Client client) {
         System.out.println("Adding a new pet.");
         Pet pet = petService.registerNewPet();
-        if (pet != null) {
+        if (pet != null) {                                                                 //TODO Optional
             client.addPet(pet);
             pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
             System.out.println("Pet has been added.");
